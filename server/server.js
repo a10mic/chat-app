@@ -5,6 +5,7 @@ const http = require('http');
 const socketIO = require('socket.io');
 
 const {generateMessage} = require('./utils/message.js');
+const {generateLocationMessage} = require('./utils/message.js');
 
 const publicPath = path.join(__dirname,'../public');
 
@@ -27,14 +28,13 @@ io.on('connection',(socket)=>{
         io.emit('newMessage',generateMessage(message.from, message.text));
         
         
-        // socket.broadcast.emit('newMessage',{
-        //     from: message.from,
-        //     text: message.text,
-        //     createdAt: new Date().getTime(),
-        // })
     })
     socket.on('disconnect',()=>{
         console.log('user disconnected!!');
+    })
+
+    socket.on('createLocationMessage', (coords)=>{
+        io.emit('newLocationMessage',generateLocationMessage('Admin',coords.latitude,coords.longitude))
     })
 })
 
