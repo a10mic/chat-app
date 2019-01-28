@@ -4,6 +4,8 @@ const app = express();
 const http = require('http');
 const socketIO = require('socket.io');
 
+const port = process.env.PORT || 3000;
+
 const {generateMessage} = require('./utils/message.js');
 const {generateLocationMessage} = require('./utils/message.js');
 
@@ -39,6 +41,6 @@ io.on('connection',(socket)=>{
 })
 
 
-server.listen(3000,() => {
-    console.log('server is up at port:3000');
+server.listen(port,() => {
+    console.log(`server is up at port:${port}`);
 })
