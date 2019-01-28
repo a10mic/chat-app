@@ -5,16 +5,15 @@ socket.on('connect',()=>{
 })
 
 socket.on('newMessage',(message)=>{
-    console.log('new message',message);
-
+    var formattedTime = moment(message.createdAt).format('h:mm a');
     var ul = document.getElementById("messages");
     var li = document.createElement("li");
-    li.appendChild(document.createTextNode(`${message.from}: ${message.text}`));
+    li.appendChild(document.createTextNode(`${message.from} ${formattedTime}: ${message.text}`));
     ul.appendChild(li);
 })
 
 socket.on('newLocationMessage',(message)=>{
-
+    var formattedTime = moment(message.createdAt).format('h:mm a');
     var a = document.createElement("a");
     var ul = document.getElementById("messages");
     var li = document.createElement("li");
@@ -22,7 +21,7 @@ socket.on('newLocationMessage',(message)=>{
     a.textContent = "My location";
     a.setAttribute('target', "blank");
     a.setAttribute('href', `${message.url}`);
-    li.appendChild(document.createTextNode(`${message.from}:`));
+    li.appendChild(document.createTextNode(`${message.from} ${formattedTime}:`));
     li.appendChild(a);
     ul.appendChild(li);
 })
