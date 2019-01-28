@@ -23,9 +23,7 @@ io.on('connection',(socket)=>{
     //
     socket.broadcast.emit('newMessage',generateMessage('Admin','New user connected'));
 
-    socket.on('createMessage',(message,callback)=>{
-        console.log('created new message',message);
-    
+    socket.on('createMessage',(message,callback)=>{ 
         //sends the created message to every user 
         io.emit('newMessage',generateMessage(message.from, message.text));
         

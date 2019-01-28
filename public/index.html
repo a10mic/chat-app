@@ -17,9 +17,17 @@
             <input name="message" type="text" placeholder="Message" autofocus  autocomplete="off" />
             <button>send</button>
         </form>
+
+        <script id="message-template" type="text/template">
+            <p>{{from}}{{text}}{{createdAt}}</p>
+        </script>
+        <script id="location-message-template" type="text/template">
+            <p>{{from}}</p><p> <a target="_blank"  href="{{url}}"> Mylocation </a> </p><p>{{createdAt}}</p>
+        </script>
         <button id="send-location">Send location</button>
         <script src="/socket.io/socket.io.js"></script>
         <script src="js/libs/moment.js"></script>
+        <script src="js/libs/mustache.js"></script>
         <script src="/js/index.js"></script>
     </body>
 </html>

@@ -7,23 +7,41 @@ socket.on('connect',()=>{
 socket.on('newMessage',(message)=>{
     var formattedTime = moment(message.createdAt).format('h:mm a');
     var ul = document.getElementById("messages");
+    var template = document.getElementById("message-template").innerHTML;
+    var html = Mustache.render(template,{
+        text: message.text,
+        from: message.from,
+        createdAt: formattedTime
+    })
     var li = document.createElement("li");
-    li.appendChild(document.createTextNode(`${message.from} ${formattedTime}: ${message.text}`));
+    li.innerHTML = html;
     ul.appendChild(li);
 })
 
 socket.on('newLocationMessage',(message)=>{
     var formattedTime = moment(message.createdAt).format('h:mm a');
-    var a = document.createElement("a");
-    var ul = document.getElementById("messages");
-    var li = document.createElement("li");
 
-    a.textContent = "My location";
-    a.setAttribute('target', "blank");
-    a.setAttribute('href', `${message.url}`);
-    li.appendChild(document.createTextNode(`${message.from} ${formattedTime}:`));
-    li.appendChild(a);
+    var ul = document.getElementById("messages");
+    var template = document.getElementById("location-message-template").innerHTML;
+    var html = Mustache.render(template,{
+        url: message.url,
+        from: message.from,
+        createdAt: formattedTime
+    })
+    var li = document.createElement("li");
+    li.innerHTML = html;
     ul.appendChild(li);
+
+    // var a = document.createElement("a");
+    // var ul = document.getElementById("messages");
+    // var li = document.createElement("li");
+
+    // a.textContent = "My location";
+    // a.setAttribute('target', "blank");
+    // a.setAttribute('href', `${message.url}`);
+    // li.appendChild(document.createTextNode(`${message.from} ${formattedTime}:`));
+    // li.appendChild(a);
+    // ul.appendChild(li);
 })
 
 socket.on('disconnect',()=>{
