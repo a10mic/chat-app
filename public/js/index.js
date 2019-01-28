@@ -37,7 +37,9 @@ document.getElementById('message-form').addEventListener("submit", (e)=>{
     socket.emit('createMessage',{
         from: 'user',
         text: document.querySelector('[name="message"]').value
-    })
+    }, ()=>{
+        document.querySelector('[name="message"]').value = ' ';
+    });
     
 });
 
@@ -48,7 +50,10 @@ locationButton.addEventListener("click",()=>{
         return alert('Geolocation not supported by your browser');
     }
 
+    locationButton.setAttribute('disabled','disabled');
+
     function success(position){
+        locationButton.removeAttribute('disabled');
         socket.emit('createLocationMessage',{
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
@@ -56,10 +61,9 @@ locationButton.addEventListener("click",()=>{
     };
 
     function error(){
+        locationButton.removeAttribute('disabled');
         alert('Location access denied');
     };
 
     navigator.geolocation.getCurrentPosition(success,error);
 });
-
-

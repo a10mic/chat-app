@@ -6,15 +6,18 @@
     </head>
     <body>
         <p>Welcome to chat app</p>
+        <div class="sidebar">
+            <h3>People</h3>
+        </div>
         <div>
             <ul id="messages"></ul>
         </div>
         <form id="message-form">
             <label></label>
-            <input name="message" type="text" placeholder="Message">
+            <input name="message" type="text" placeholder="Message" autofocus  autocomplete="off" />
             <button>send</button>
         </form>
-        <button id="send-location">send location</button>
+        <button id="send-location">Send location</button>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/index.js"></script>
     </body>
