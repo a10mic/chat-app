@@ -1,7 +1,16 @@
 var socket = io();
 
 socket.on('connect',()=>{
-    console.log("connected to server");
+    var params = jQuery.deparam(window.location.search);
+
+    socket.emit('join',params, (err)=>{
+        if(err){
+            alert(err);
+            window.location.href = '/';
+        } else{
+            console.log("no error");
+        }
+    })
 })
 
 socket.on('newMessage',(message)=>{
@@ -48,6 +57,14 @@ socket.on('disconnect',()=>{
     console.log('server disconnected');
 });
 
+socket.on('updateUserList', (users) => {
+    var ul = jQuery('<ul></ul>');
+
+    users.forEach((user) =>{
+        ul.append(jQuery('<li></li>').text(user));
+    })
+    jQuery('#users').html(ul);
+})
 document.getElementById('message-form').addEventListener("submit", (e)=>{
     e.preventDefault();
 
